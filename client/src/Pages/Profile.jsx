@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ToastContainer } from "react-toastify";
-import { handleError } from "../utils";
+import { handleError, API_BASE_URL } from "../utils";
 import Header from "../assets/components/Home/Header";
 import Footer from "../assets/components/Home/Footer";
 import { UserRound, AlertCircle, Store } from "lucide-react";
@@ -26,7 +26,7 @@ export default function Profile({ setIsAuthenticated }) {
           return;
         }
 
-        const res = await fetch("http://localhost:3000/api/profile", {
+        const res = await fetch(`${API_BASE_URL}/api/profile`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -145,8 +145,6 @@ export default function Profile({ setIsAuthenticated }) {
 
         <div className="max-w-xl w-full bg-white rounded-xl shadow-lg p-3 md:p-6 text-center border border-gray-200">
 
-          {/* Profile Icon */}
-
           <div className="mb-6 mx-auto w-24 h-24 flex items-center justify-center rounded-full bg-gradient-to-br from-purple-100 to-purple-200 text-purple-600 shadow-inner">
 
             <UserRound
@@ -156,8 +154,6 @@ export default function Profile({ setIsAuthenticated }) {
 
           </div>
 
-          {/* Welcome */}
-
           <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-3 tracking-tight">
             Welcome {profile?.name || "User"}
           </h1>
@@ -165,8 +161,6 @@ export default function Profile({ setIsAuthenticated }) {
           <p className="text-lg text-gray-700 mb-8 max-w-lg mx-auto">
             We’re glad to have you here! Your ReWear profile is ready.
           </p>
-
-          {/* Profile Details */}
 
           <div className="bg-white p-6 rounded-xl shadow-md border border-gray-200 text-left max-w-md mx-auto space-y-5">
 
@@ -226,8 +220,6 @@ export default function Profile({ setIsAuthenticated }) {
 
           </div>
 
-          {/* Seller Dashboard */}
-
           <Link
             to="/seller-dashboard"
             className="mt-8 w-full max-w-md mx-auto flex items-center justify-center gap-3 bg-purple-600 text-white font-bold py-3 px-8 rounded-lg shadow-lg hover:bg-purple-700 transition-all duration-200"
@@ -235,8 +227,6 @@ export default function Profile({ setIsAuthenticated }) {
             <Store size={22} />
             Seller Dashboard
           </Link>
-
-          {/* Home + Logout */}
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mt-4">
 

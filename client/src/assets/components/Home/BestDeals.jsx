@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
-
+import { API_BASE_URL } from '../../../utils';
 export default function BestDeals() {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/rewear-products")
+    fetch(`${API_BASE_URL}/api/rewear-products`)
       .then((res) => res.json())
       .then((data) => {
         setProducts(data);

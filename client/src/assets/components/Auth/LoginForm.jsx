@@ -5,6 +5,7 @@ import { handleError, handleSuccess } from "../../../utils";
 import Footer from "../Home/Footer";
 import HeaderMain from "../Home/HeaderMain";
 import { LogIn, RefreshCcw, ShieldCheck, ShoppingBag } from "lucide-react";
+import { API_BASE_URL } from '../../../utils';
 
 export default function LoginForm() {
   const [loginInfo, setLoginInfo] = useState({
@@ -34,7 +35,7 @@ export default function LoginForm() {
 
     try {
       const response = await fetch(
-        "http://localhost:3000/api/auth/login",
+        `${API_BASE_URL}/api/auth/login`,
         {
           method: "POST",
           headers: {

@@ -3,6 +3,7 @@ import { Search, Package, ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "../assets/components/Home/Header";
 import Footer from "../assets/components/Home/Footer";
+import { API_BASE_URL } from '../utils';
 
 export default function MyOrders() {
   const [email, setEmail] = useState(
@@ -25,7 +26,7 @@ export default function MyOrders() {
       setSearched(true);
 
       const response = await fetch(
-        `http://localhost:3000/api/orders/buyer/${encodeURIComponent(email.trim())}`
+        `${API_BASE_URL}/api/orders/buyer/${encodeURIComponent(email.trim())}`
       );
 
       const result = await response.json();

@@ -3,6 +3,7 @@ import { ArrowLeft, RefreshCcw, Search } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "../assets/components/Home/Header";
 import Footer from "../assets/components/Home/Footer";
+import { API_BASE_URL } from '../utils';
 
 export default function MySwapRequests() {
   const [email, setEmail] = useState(
@@ -26,7 +27,7 @@ export default function MySwapRequests() {
       setSearched(true);
 
       const response = await fetch(
-        `http://localhost:3000/api/swap-requests/requester/${encodeURIComponent(
+        `${API_BASE_URL}/api/swap-requests/requester/${encodeURIComponent(
           email.trim()
         )}`
       );

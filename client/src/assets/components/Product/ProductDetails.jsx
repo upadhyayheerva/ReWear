@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import Header from "../Home/Header";
 import Footer from "../Home/Footer";
+import { API_BASE_URL } from '../../../utils';
 import {
   Loader,
   ArrowLeft,
@@ -43,7 +44,7 @@ export default function ProductDetails() {
   });
 
   useEffect(() => {
-    fetch(`http://localhost:3000/api/rewear-products/${id}`)
+    fetch(`${API_BASE_URL}/api/rewear-products/${id}`)
       .then((res) => {
         if (!res.ok) {
           throw new Error("Product not found");
@@ -91,7 +92,7 @@ export default function ProductDetails() {
     try {
       setLoadingOrder(true);
 
-      const response = await fetch("http://localhost:3000/api/orders", {
+      const response = await fetch(`${API_BASE_URL}/api/orders`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -150,7 +151,7 @@ export default function ProductDetails() {
       setLoadingSwap(true);
 
       const response = await fetch(
-        "http://localhost:3000/api/swap-requests",
+        `${API_BASE_URL}/api/swap-requests`,
         {
           method: "POST",
           headers: {

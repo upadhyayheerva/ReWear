@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Search } from "lucide-react";
+import { API_BASE_URL } from '../../../utils';
 
 export default function SearchBar({
   searchText = "",
@@ -11,7 +12,7 @@ export default function SearchBar({
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/rewear-products")
+    fetch(`${API_BASE_URL}/api/rewear-products`)
       .then((res) => res.json())
       .then((data) => {
         const uniqueCategories = [

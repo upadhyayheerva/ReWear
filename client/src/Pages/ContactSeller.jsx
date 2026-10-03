@@ -11,6 +11,7 @@ import {
 
 import Header from "../assets/components/Home/Header";
 import Footer from "../assets/components/Home/Footer";
+import { API_BASE_URL } from '../utils';
 
 export default function ContactSeller() {
   const { id } = useParams();
@@ -34,7 +35,7 @@ export default function ContactSeller() {
     const fetchProduct = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3000/api/rewear-products/${id}`
+          `${API_BASE_URL}/api/rewear-products/${id}`
         );
 
         if (!response.ok) {

@@ -13,6 +13,7 @@ import {
 
 import Header from "../assets/components/Home/Header";
 import Footer from "../assets/components/Home/Footer";
+import { API_BASE_URL } from "../utils";
 
 export default function SellerDashboard() {
   const sellerName = localStorage.getItem("loggedInUser") || "";
@@ -35,12 +36,8 @@ export default function SellerDashboard() {
 
     const encodedSellerName = encodeURIComponent(sellerName);
 
-    // =====================================================
-    // FETCH SELLER ORDERS
-    // =====================================================
-
     fetch(
-      `http://localhost:3000/api/orders/seller/${encodedSellerName}`
+      `${API_BASE_URL}/api/orders/seller/${encodedSellerName}`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -54,12 +51,8 @@ export default function SellerDashboard() {
         setLoadingOrders(false);
       });
 
-    // =====================================================
-    // FETCH SELLER SWAP REQUESTS
-    // =====================================================
-
     fetch(
-      `http://localhost:3000/api/swap-requests/seller/${encodedSellerName}`
+      `${API_BASE_URL}/api/swap-requests/seller/${encodedSellerName}`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -74,16 +67,12 @@ export default function SellerDashboard() {
       });
   }, [sellerName]);
 
-  // =====================================================
-  // UPDATE ORDER STATUS
-  // =====================================================
-
   const updateOrderStatus = async (orderId, status) => {
     try {
       setUpdatingOrder(orderId);
 
       const response = await fetch(
-        `http://localhost:3000/api/orders/${orderId}/status`,
+        `${API_BASE_URL}/api/orders/${orderId}/status`,
         {
           method: "PUT",
           headers: {
@@ -120,16 +109,12 @@ export default function SellerDashboard() {
     }
   };
 
-  // =====================================================
-  // UPDATE SWAP REQUEST STATUS
-  // =====================================================
-
   const updateSwapStatus = async (requestId, status) => {
     try {
       setUpdatingSwap(requestId);
 
       const response = await fetch(
-        `http://localhost:3000/api/swap-requests/${requestId}/status`,
+        `${API_BASE_URL}/api/swap-requests/${requestId}/status`,
         {
           method: "PUT",
           headers: {
@@ -173,10 +158,6 @@ export default function SellerDashboard() {
     }
   };
 
-  // =====================================================
-  // SUMMARY DATA
-  // =====================================================
-
   const pendingOrders = orders.filter(
     (order) =>
       order.status === "PLACED" ||
@@ -191,15 +172,10 @@ export default function SellerDashboard() {
     (request) => request.status === "PENDING"
   );
 
-  // =====================================================
-  // ORDER ACTION BUTTONS
-  // =====================================================
-
   const renderOrderActions = (order) => {
     if (order.status === "PLACED") {
       return (
         <div className="flex flex-wrap gap-2 mt-5">
-
           <button
             onClick={() =>
               updateOrderStatus(order._id, "CONFIRMED")
@@ -224,7 +200,6 @@ export default function SellerDashboard() {
             <XCircle size={17} />
             Cancel Order
           </button>
-
         </div>
       );
     }
@@ -232,7 +207,6 @@ export default function SellerDashboard() {
     if (order.status === "CONFIRMED") {
       return (
         <div className="flex flex-wrap gap-2 mt-5">
-
           <button
             onClick={() =>
               updateOrderStatus(order._id, "SHIPPED")
@@ -246,7 +220,6 @@ export default function SellerDashboard() {
               ? "Updating..."
               : "Mark as Shipped"}
           </button>
-
         </div>
       );
     }
@@ -254,7 +227,6 @@ export default function SellerDashboard() {
     if (order.status === "SHIPPED") {
       return (
         <div className="flex flex-wrap gap-2 mt-5">
-
           <button
             onClick={() =>
               updateOrderStatus(order._id, "DELIVERED")
@@ -268,7 +240,6 @@ export default function SellerDashboard() {
               ? "Updating..."
               : "Mark as Delivered"}
           </button>
-
         </div>
       );
     }
@@ -294,15 +265,10 @@ export default function SellerDashboard() {
     return null;
   };
 
-  // =====================================================
-  // SWAP ACTION BUTTONS
-  // =====================================================
-
   const renderSwapActions = (request) => {
     if (request.status === "PENDING") {
       return (
         <div className="flex flex-wrap gap-2 mt-5">
-
           <button
             onClick={() =>
               updateSwapStatus(request._id, "ACCEPTED")
@@ -327,7 +293,6 @@ export default function SellerDashboard() {
             <XCircle size={17} />
             Reject Swap
           </button>
-
         </div>
       );
     }
@@ -335,7 +300,6 @@ export default function SellerDashboard() {
     if (request.status === "ACCEPTED") {
       return (
         <div className="flex flex-wrap gap-2 mt-5">
-
           <button
             onClick={() =>
               updateSwapStatus(request._id, "COMPLETED")
@@ -349,7 +313,6 @@ export default function SellerDashboard() {
               ? "Updating..."
               : "Complete Swap"}
           </button>
-
         </div>
       );
     }
@@ -389,12 +352,7 @@ export default function SellerDashboard() {
       <Header showSearchBar={false} />
 
       <main className="min-h-screen bg-gray-50 px-4 py-10">
-
         <div className="max-w-7xl mx-auto">
-
-          {/* ================================================= */}
-          {/* HEADER */}
-          {/* ================================================= */}
 
           <Link
             to="/"
@@ -405,7 +363,6 @@ export default function SellerDashboard() {
           </Link>
 
           <div className="mb-8">
-
             <h1 className="text-3xl md:text-4xl font-bold text-gray-800">
               Seller Dashboard
             </h1>
@@ -417,20 +374,12 @@ export default function SellerDashboard() {
             <p className="text-gray-500 mt-1">
               Manage your clothing orders and swap requests.
             </p>
-
           </div>
-
-          {/* ================================================= */}
-          {/* SUMMARY CARDS */}
-          {/* ================================================= */}
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
 
-            {/* Total Orders */}
             <div className="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm">
-
               <div className="flex items-center justify-between">
-
                 <div>
                   <p className="text-gray-500 text-sm">
                     Total Orders
@@ -447,16 +396,11 @@ export default function SellerDashboard() {
                     className="text-purple-600"
                   />
                 </div>
-
               </div>
-
             </div>
 
-            {/* Pending Orders */}
             <div className="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm">
-
               <div className="flex items-center justify-between">
-
                 <div>
                   <p className="text-gray-500 text-sm">
                     Pending Orders
@@ -473,16 +417,11 @@ export default function SellerDashboard() {
                     className="text-orange-500"
                   />
                 </div>
-
               </div>
-
             </div>
 
-            {/* Swap Requests */}
             <div className="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm">
-
               <div className="flex items-center justify-between">
-
                 <div>
                   <p className="text-gray-500 text-sm">
                     Swap Requests
@@ -499,16 +438,11 @@ export default function SellerDashboard() {
                     className="text-purple-600"
                   />
                 </div>
-
               </div>
-
             </div>
 
-            {/* Delivered */}
             <div className="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm">
-
               <div className="flex items-center justify-between">
-
                 <div>
                   <p className="text-gray-500 text-sm">
                     Delivered Orders
@@ -525,21 +459,14 @@ export default function SellerDashboard() {
                     className="text-green-600"
                   />
                 </div>
-
               </div>
-
             </div>
 
           </div>
 
-          {/* ================================================= */}
-          {/* INCOMING ORDERS */}
-          {/* ================================================= */}
-
           <section className="mb-12">
 
             <div className="flex items-center gap-3 mb-5">
-
               <div className="w-11 h-11 bg-purple-100 rounded-xl flex items-center justify-center">
                 <ShoppingBag
                   size={23}
@@ -548,7 +475,6 @@ export default function SellerDashboard() {
               </div>
 
               <div>
-
                 <h2 className="text-2xl font-bold text-gray-800">
                   Incoming Orders
                 </h2>
@@ -556,9 +482,7 @@ export default function SellerDashboard() {
                 <p className="text-gray-500 text-sm">
                   Orders placed for your clothing.
                 </p>
-
               </div>
-
             </div>
 
             {loadingOrders ? (
@@ -567,7 +491,6 @@ export default function SellerDashboard() {
               </div>
             ) : orders.length === 0 ? (
               <div className="bg-white border border-gray-200 rounded-2xl p-10 text-center">
-
                 <Package
                   size={45}
                   className="mx-auto text-gray-400"
@@ -580,13 +503,11 @@ export default function SellerDashboard() {
                 <p className="text-gray-500 mt-2">
                   Orders from buyers will appear here.
                 </p>
-
               </div>
             ) : (
               <div className="space-y-5">
 
                 {orders.map((order) => (
-
                   <div
                     key={order._id}
                     className="bg-white border border-gray-200 rounded-2xl shadow-sm p-5"
@@ -669,17 +590,12 @@ export default function SellerDashboard() {
                     </div>
 
                   </div>
-
                 ))}
 
               </div>
             )}
 
           </section>
-
-          {/* ================================================= */}
-          {/* INCOMING SWAP REQUESTS */}
-          {/* ================================================= */}
 
           <section>
 
@@ -693,7 +609,6 @@ export default function SellerDashboard() {
               </div>
 
               <div>
-
                 <h2 className="text-2xl font-bold text-gray-800">
                   Incoming Swap Requests
                 </h2>
@@ -701,7 +616,6 @@ export default function SellerDashboard() {
                 <p className="text-gray-500 text-sm">
                   People who want to exchange clothing with you.
                 </p>
-
               </div>
 
             </div>
@@ -820,7 +734,6 @@ export default function SellerDashboard() {
                           ).toLocaleDateString()}
                         </p>
 
-                        {/* Swap Actions */}
                         {renderSwapActions(request)}
 
                       </div>
@@ -833,8 +746,6 @@ export default function SellerDashboard() {
 
               </div>
             )}
-
-            {/* Pending Summary */}
 
             {pendingSwaps.length > 0 && (
               <div className="mt-6 bg-yellow-50 border border-yellow-200 rounded-xl p-4">
@@ -850,7 +761,6 @@ export default function SellerDashboard() {
           </section>
 
         </div>
-
       </main>
 
       <Footer />

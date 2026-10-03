@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Header from "../Home/Header";
 import Footer from "../Home/Footer";
+import { API_BASE_URL } from '../../../utils';
 
 export default function AllProducts() {
   const [products, setProducts] = useState([]);
@@ -13,7 +14,7 @@ export default function AllProducts() {
   const location = useLocation();
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/rewear-products")
+    fetch(`${API_BASE_URL}/api/rewear-products`)
       .then((res) => {
         if (!res.ok) {
           throw new Error("Failed to fetch products");

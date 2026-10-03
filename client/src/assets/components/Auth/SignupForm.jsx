@@ -4,6 +4,7 @@ import { ToastContainer } from "react-toastify";
 import { handleError, handleSuccess } from "../../../utils";
 import Footer from "../Home/Footer";
 import HeaderMain from "../Home/HeaderMain";
+import { API_BASE_URL } from '../../../utils';
 
 export default function SignupForm() {
   const [signupInfo, setSignupInfo] = useState({
@@ -44,7 +45,7 @@ export default function SignupForm() {
 
     try {
       const response = await fetch(
-        "http://localhost:3000/api/auth/signup",
+        `${API_BASE_URL}/api/auth/signup`,
         {
           method: "POST",
           headers: {

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Header from "../assets/components/Home/Header";
 import Footer from "../assets/components/Home/Footer";
-
+import { API_BASE_URL } from '../utils';
 export default function ProductListing() {
   const [product, setProduct] = useState({
     title: "",
@@ -45,7 +45,7 @@ export default function ProductListing() {
 
     try {
       const response = await fetch(
-        "http://localhost:3000/api/rewear-products",
+        `${API_BASE_URL}/api/rewear-products`,
         {
           method: "POST",
           headers: {
